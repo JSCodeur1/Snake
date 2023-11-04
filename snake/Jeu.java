@@ -3,7 +3,6 @@ package jeux;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.*;
 
 public class Jeu extends JPanel{	
@@ -12,16 +11,15 @@ public class Jeu extends JPanel{
 	
 	ArrayList<int[]> moves = new ArrayList<>();
 	Random r = new Random();
-	
-
+		
+	public int vscore;
+	public boolean mort = false;
 	private int[] bords = {50, 50, 1550, 770};
 	private int x = r.nextInt(bords[0]+1, 800);
 	private int y = 400;
 	private int vitesse = 1;
 	private int dir = 0;
 	private int score = 100;
-	public int vscore;
-	public boolean mort = false;
 	private int snakeSize = 6;
 	private double truc = 0;
 	private int pommex, pommey;
@@ -35,35 +33,12 @@ public class Jeu extends JPanel{
 		this.pommex = this.r.nextInt(bords[0]+10, bords[2]-10);
 		this.pommey = this.r.nextInt(bords[1]+10, bords[3]-10);
 	}
-	
-	public void dessNum(Graphics g, int num, int x, int y) {
-		switch (num) {
-		case (1):
-			g.drawLine(x, y, x, y-20);
-		    break;
-		
-		case (2):
-			g.drawLine(x, y, x-10, y);
-			g.drawLine(x-10, y, x-10, y-10);
-			g.drawLine(x-10, y-10, x, y-10);
-			g.drawLine(x, y-10, x, y-20);
-			g.drawLine(x, y-20, x-10, y-20);
-			break;
-		case (3):
-			g.drawLine(x, y, x-10, y);
-			g.drawLine(x, y, x, y-20);
-			g.drawLine(x-10, y-10, x, y-10);
-			g.drawLine(x, y-20, x-10, y-20);
-			break;
-		}
-		
-	}
 
 	public Jeu() {
 		
-		newPomme();
+	newPomme();
 		
-		Thread updateThread = new Thread(new Runnable() {
+	Thread updateThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
@@ -85,20 +60,7 @@ public class Jeu extends JPanel{
 
         updateThread.start();
         
-		/*
-		Timer timer = new Timer(0, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	repaint();
-			}
-		});
-		timer.start();
-		*/
-		/*
-		while (true) {
-			repaint();
-		}
-		*/
+		
 		
 	}
 	
@@ -117,7 +79,7 @@ public class Jeu extends JPanel{
 		
 		
 		for (int i = 0; i < moves.size(); i++) {
-			//g.drawLine(ancx, ancy, moves.get(i)[0], moves.get(i)[1]);
+			
 			if (i<truc) {
 				g.setColor(Color.BLACK);
 			} else {
